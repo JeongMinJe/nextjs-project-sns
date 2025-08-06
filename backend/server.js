@@ -71,6 +71,7 @@ app.post("/api/users/test", (req, res) => {
 app.post("/api/signup", async (req, res) => {
   try {
     const { username, password } = req.body;
+    console.log("데이터받음", username);
 
     // 1. 기본 검증
     if (!username || !password) {
