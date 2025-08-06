@@ -67,11 +67,12 @@ app.post("/api/users/test", (req, res) => {
 });
 
 // 🎯 회원가입 API (메인 기능)
+// server.js의 회원가입 API 검증 부분 강화
 app.post("/api/signup", async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // 1. 입력 데이터 검증
+    // 1. 기본 검증
     if (!username || !password) {
       return res.status(400).json({
         error: "사용자명과 비밀번호를 모두 입력해주세요",
@@ -85,7 +86,7 @@ app.post("/api/signup", async (req, res) => {
       });
     }
 
-    // 3. 특수문자 검증
+    // 3. 사용자명 특수문자 검증
     const usernameRegex = /^[a-zA-Z0-9가-힣]+$/;
     if (!usernameRegex.test(username)) {
       return res.status(400).json({
@@ -121,7 +122,7 @@ app.post("/api/signup", async (req, res) => {
           });
         }
 
-        // 7. 성공 응답
+        // 7. 성공 응답 (비밀번호는 응답에 포함하지 않음)
         res.status(201).json({
           success: true,
           message: "회원가입이 완료되었습니다! 🎉",
@@ -129,7 +130,7 @@ app.post("/api/signup", async (req, res) => {
           username: username,
         });
 
-        // 8. 서버 로그
+        // 8. 서버 로그 (개발용)
         console.log(`새 사용자 가입: ${username} (ID: ${this.lastID})`);
       }
     );
